@@ -6,6 +6,8 @@ Built with [Hyper Elements](https://www.hyperelements.dev/) for the Hyper Elemen
 
 **Live preview: [nivi06-pixel.github.io/mise-recipe-kit](https://nivi06-pixel.github.io/mise-recipe-kit/)**: every output for every recipe: [web page](https://nivi06-pixel.github.io/mise-recipe-kit/cookie-pie/) · [email](https://nivi06-pixel.github.io/mise-recipe-kit/cookie-pie/email.html) · [kitchen card PDF](https://nivi06-pixel.github.io/mise-recipe-kit/cookie-pie/kitchen-card.pdf) · [pin](https://nivi06-pixel.github.io/mise-recipe-kit/cookie-pie/pin.png) · [cheeseburgers](https://nivi06-pixel.github.io/mise-recipe-kit/cheeseburger/) · [cheesecake](https://nivi06-pixel.github.io/mise-recipe-kit/cheesecake/)
 
+![Demo: write the recipe once, run one build, get a web page, an email, a kitchen card PDF and share images, then rebuild it for 16 in US units](media/demo.gif)
+
 ![The same recipe as a web page, a newsletter email, a PDF kitchen card and a Pinterest pin](media/hero.png)
 
 > *Mise en place*: "everything in its place". Cooks set out every ingredient before they light the stove. This kit does the same for a recipe's content: you write it once, and each format gets the version it needs.
