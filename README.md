@@ -53,6 +53,10 @@ Mise treats a recipe as **data plus kitchen math**, and treats Hyper Elements as
   <img src="media/gallery.png" alt="Gallery index linking every output" width="58%">
 </p>
 
+**Tested in real email clients' rendering models.** `npm run preview` runs `hyper-elements preview` on the email design: Classic Outlook, Outlook.com, Gmail and Apple Mail, each on desktop and phone, in light and dark mode. All 9 previews come back with **0 errors and 0 warnings**. Where a client strips something, the email is built to hold up: Classic Outlook squares off the rounded corners, and Gmail drops the web fonts, so Fraunces and Inter fall back to Georgia and Arial.
+
+![The same newsletter as Classic Outlook, Gmail and iPhone Mail draw it, in light and dark mode](media/email-clients.png)
+
 Every output reads the same way: the dish's name and a one-line description first, then a **real photo of the dish**. The photo comes in as an asset in two forms. The web page and the email link the published file, which a browser or mail client fetches. The PDF and the PNGs embed the bytes, so the build works offline. In the page, the card and the share images it fills a fixed-height `Layer`, cropped to cover, with the photographer's credit over the corner.
 
 ---
@@ -146,6 +150,7 @@ npm run dev                                   # Hyper Elements live preview of e
 npm run check                                 # Hyper Elements validation + lint, 0 errors / 0 warnings
 npm test                                      # kitchen math tests
 npm run example                               # render the CLI-made cheeseburger share card
+npm run preview                               # the email as Outlook, Gmail and Apple Mail draw it (out/clients/)
 ```
 
 `docs/` is committed and served by GitHub Pages: that's the [live preview](https://nivi06-pixel.github.io/mise-recipe-kit/).
