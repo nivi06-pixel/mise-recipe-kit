@@ -5,7 +5,7 @@ import { prepare, type Options, type Recipe } from "../src/kitchen";
 import { Plate, Tick, TimeBar } from "../src/parts";
 import { themeFor } from "../src/theme";
 import { printFonts } from "../src/fonts";
-import rasam from "../recipes/tomato-rasam";
+import cookies from "../recipes/chocolate-chip-cookies";
 
 export interface KitchenCardProps extends Options {
   recipe: Recipe;
@@ -176,4 +176,4 @@ export default function KitchenCard({ recipe, serves, system }: KitchenCardProps
   );
 }
 
-KitchenCard.PreviewProps = { recipe: rasam } satisfies KitchenCardProps;
+KitchenCard.PreviewProps = { recipe: cookies } satisfies KitchenCardProps;

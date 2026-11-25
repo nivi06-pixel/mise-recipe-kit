@@ -31,7 +31,7 @@
         "maxLength": 48,
         "minLength": 1
       },
-      "guidance": "The name people search for: 'Tomato Rasam', not 'My cosy soup'."
+      "guidance": "The name people search for: 'Chocolate Chip Cookies', not 'Little bites of joy'."
     },
     {
       "path": "kicker",
@@ -183,7 +183,7 @@
       {
         "path": "colors.primary",
         "group": "colors",
-        "value": "#b8462a"
+        "value": "#9b4a1c"
       },
       {
         "path": "colors.primaryForeground",

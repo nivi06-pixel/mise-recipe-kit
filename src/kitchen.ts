@@ -161,7 +161,20 @@ export function amount(ing: Ingredient, factor: number, system: System): Amount 
 /** "1½ tbsp ghee, melted": the line as it's printed. */
 export function line(ing: Ingredient, factor: number, system: System): { amount: string; item: string; note?: string } {
   const a = amount(ing, factor, system);
-  return { amount: [a.qty, a.unit].filter(Boolean).join(" "), item: ing.item, note: ing.note };
+  // counted things are written singular ("large egg") and pluralised here, so 1 and 2 both read right
+  const counted = ing.qty !== undefined && (ing.unit ?? "piece") === "piece";
+  const many = counted && ing.qty! * factor > 1.25;
+  const item = many ? pluralItem(ing.item) : ing.item;
+  return { amount: [a.qty, a.unit].filter(Boolean).join(" "), item, note: ing.note };
+}
+
+/** "large egg" → "large eggs", "chilli" → "chillies"; the last word only. */
+export function pluralItem(item: string): string {
+  if (/s$/.test(item)) return item;
+  if (/[^aeiou]y$/.test(item)) return item.slice(0, -1) + "ies";
+  if (/(ch|sh|x|o)$/.test(item)) return item + "es";
+  if (/i$/.test(item)) return item + "es";
+  return item + "s";
 }
 
 // ---------------------------------------------------------------------------

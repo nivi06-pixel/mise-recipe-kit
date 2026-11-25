@@ -15,9 +15,9 @@ const bananaBread: Recipe = {
     "Browning the butter takes four extra minutes and changes everything: the milk solids toast into something that tastes like hazelnuts and caramel. Use the ugliest bananas you can find. If they are not spotted black, wait two more days; the loaf will thank you.",
   ingredients: [
     { qty: 115, unit: "g", item: "unsalted butter", aisle: "dairy" },
-    { qty: 4, unit: "piece", item: "very ripe bananas", note: "about 450 g peeled", aisle: "produce" },
+    { qty: 4, unit: "piece", item: "very ripe banana", note: "about 450 g peeled", aisle: "produce" },
     { qty: 150, unit: "g", item: "light brown sugar", aisle: "pantry" },
-    { qty: 2, unit: "piece", item: "large eggs", note: "at room temperature", aisle: "dairy" },
+    { qty: 2, unit: "piece", item: "large egg", note: "at room temperature", aisle: "dairy" },
     { qty: 60, unit: "ml", item: "plain yoghurt", aisle: "dairy" },
     { qty: 1, unit: "tsp", item: "vanilla extract", aisle: "pantry" },
     { qty: 220, unit: "g", item: "plain flour", aisle: "pantry" },

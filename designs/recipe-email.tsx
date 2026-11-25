@@ -4,7 +4,7 @@ import {
 import { prepare, type Options, type Recipe } from "../src/kitchen";
 import { themeFor } from "../src/theme";
 import { webFonts } from "../src/fonts";
-import rasam from "../recipes/tomato-rasam";
+import cookies from "../recipes/chocolate-chip-cookies";
 
 export interface RecipeEmailProps extends Options {
   recipe: Recipe;
@@ -113,4 +113,4 @@ export default function RecipeEmail({ recipe, serves, system, issue = "This week
   );
 }
 
-RecipeEmail.PreviewProps = { recipe: rasam, links: { page: "index.html", card: "kitchen-card.pdf" } } satisfies RecipeEmailProps;
+RecipeEmail.PreviewProps = { recipe: cookies, links: { page: "index.html", card: "kitchen-card.pdf" } } satisfies RecipeEmailProps;

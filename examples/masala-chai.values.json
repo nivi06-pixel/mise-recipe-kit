@@ -4,7 +4,7 @@
     "module": "../src/share-card.tsx",
     "id": "mise.ShareCard",
     "version": "1.0.0",
-    "sha256": "8f6c39c97f4706f24606d3edf30c173c73ceff0bc15b6852b552938e51efcf6c"
+    "sha256": "b886349475b6098443816732b8f089a40463a7a23d19bb3340177a561eec9b94"
   },
   "formats": [
     "pin",

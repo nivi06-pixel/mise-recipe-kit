@@ -4,9 +4,9 @@
 
 Built with [Hyper Elements](https://www.hyperelements.dev/) for the Hyper Elements Template Challenge.
 
-**Live preview: [nivi06-pixel.github.io/mise-recipe-kit](https://nivi06-pixel.github.io/mise-recipe-kit/)**: every output for every recipe: [web page](https://nivi06-pixel.github.io/mise-recipe-kit/tomato-rasam/) · [email](https://nivi06-pixel.github.io/mise-recipe-kit/tomato-rasam/email.html) · [kitchen card PDF](https://nivi06-pixel.github.io/mise-recipe-kit/tomato-rasam/kitchen-card.pdf) · [pin](https://nivi06-pixel.github.io/mise-recipe-kit/tomato-rasam/pin.png) · [scaled for 8, US units](https://nivi06-pixel.github.io/mise-recipe-kit/tomato-rasam-for-8-us/)
+**Live preview: [nivi06-pixel.github.io/mise-recipe-kit](https://nivi06-pixel.github.io/mise-recipe-kit/)**: every output for every recipe: [web page](https://nivi06-pixel.github.io/mise-recipe-kit/chocolate-chip-cookies/) · [email](https://nivi06-pixel.github.io/mise-recipe-kit/chocolate-chip-cookies/email.html) · [kitchen card PDF](https://nivi06-pixel.github.io/mise-recipe-kit/chocolate-chip-cookies/kitchen-card.pdf) · [pin](https://nivi06-pixel.github.io/mise-recipe-kit/chocolate-chip-cookies/pin.png) · [scaled to 48, US units](https://nivi06-pixel.github.io/mise-recipe-kit/chocolate-chip-cookies-for-48-us/)
 
-![The same Tomato Rasam recipe as a web page, a newsletter email, a PDF kitchen card and a Pinterest pin](media/hero.png)
+![The same Chocolate Chip Cookies recipe as a web page, a newsletter email, a PDF kitchen card and a Pinterest pin](media/hero.png)
 
 > *Mise en place*: "everything in its place". Cooks set out every ingredient before they light the stove. This kit does the same for a recipe's content: you write it once, and each format gets the version it needs.
 
@@ -30,17 +30,17 @@ Mise treats a recipe as **data plus kitchen math**, and treats Hyper Elements as
 **Web page:** desktop and phone, from the same design (`style.mobile`, `hidden={{ mobile: true }}`, rows that stack)
 
 <p>
-  <img src="media/page-rasam.png" alt="Tomato Rasam recipe web page on desktop" width="72%">
-  <img src="media/page-rasam-mobile.png" alt="The same page on a phone" width="22%">
+  <img src="media/page-cookies.png" alt="Chocolate Chip Cookies recipe web page on desktop" width="72%">
+  <img src="media/page-cookies-mobile.png" alt="The same page on a phone" width="22%">
 </p>
 
 **Kitchen card (PDF, A5):** three pages, with a page header and footer, page numbers, and a shopping list you can tick off
 
 ![Three A5 PDF pages: ingredients, method, shopping list](media/kitchen-card.png)
 
-**Scaling and unit conversion:** `npm run build -- --serves 8 --us` doubles the recipe and switches to cups, ounces and pounds. Every output updates: 400 g becomes 1¾ lb, 2 tbsp ghee becomes ¼ cup, and the shopping list follows.
+**Scaling and unit conversion:** `npm run build -- --serves 48 --us` doubles the batch and switches to cups, ounces and pounds. Every output updates: 170 g butter becomes 12 oz, 280 g flour becomes 1¼ lb, "1 large egg" becomes "2 large eggs", and the shopping list follows.
 
-![The card for 4 in metric beside the card for 8 in US units](media/kitchen-card-scaled.png)
+![The card for 24 cookies in metric beside the card for 48 in US units](media/kitchen-card-scaled.png)
 
 **Share images:** one template, three formats; the headline is auto-fitted to each
 
@@ -49,7 +49,7 @@ Mise treats a recipe as **data plus kitchen math**, and treats Hyper Elements as
 **Newsletter email** and **the gallery** that the build writes (it doubles as a GitHub Pages site)
 
 <p>
-  <img src="media/email-rasam.png" alt="Newsletter email for Tomato Rasam" width="38%">
+  <img src="media/email-cookies.png" alt="Newsletter email for Chocolate Chip Cookies" width="38%">
   <img src="media/gallery.png" alt="Gallery index linking every output" width="58%">
 </p>
 
@@ -112,13 +112,13 @@ Hyper Elements' checks caught real problems while this kit was being built, and 
 
 The part that makes the template *useful* rather than just pretty:
 
-- **Scaling**: `--serves 8` multiplies every amount; times stay the same, and a note on the card says so.
-- **Readable amounts**: 0.75 tsp becomes **¾ tsp** and 8.33 cups becomes **8 1/3 cups** (thirds and eighths are written out because most font subsets lack ⅓/⅛). 1 240 g becomes **1.25 kg**, and a quarter of an egg is never printed.
+- **Scaling**: `--serves 48` multiplies every amount; times stay the same, and a note on the card says so.
+- **Readable amounts**: 0.75 tsp becomes **¾ tsp** and 8.33 cups becomes **8 1/3 cups** (thirds and eighths are written out because most font subsets lack ⅓/⅛). 1 240 g becomes **1.25 kg**, a quarter of an egg is never printed, and counted items are pluralised ("1 large egg", "2 large eggs").
 - **Units**: `--us` turns grams into oz/lb and millilitres into cups and spoons; small metric volumes become spoons.
 - **Shopping list**: ingredients grouped by aisle (fruit & veg, dairy, pantry, spices…), with staples like salt and water left off.
 - **Time breakdown**: prep/cook/rest drawn as a proportional bar (`Svg` + `Rect`) with labels aligned under each segment.
 
-Covered by `npm test` (6 tests, Node's built-in test runner).
+Covered by `npm test` (7 tests, Node's built-in test runner).
 
 ---
 
@@ -136,8 +136,8 @@ npm run build          # every recipe, every format → docs/
 Open `docs/index.html` to browse everything. Other commands:
 
 ```bash
-npm run build -- --serves 8 --us              # cook for 8, in US units (adds a folder to docs/)
-npm run build -- --recipe tomato-rasam        # just one recipe
+npm run build -- --serves 48 --us             # bake 48, in US units (adds a folder to docs/)
+npm run build -- --recipe chocolate-chip-cookies        # just one recipe
 npm run dev                                   # Hyper Elements live preview of every design
 npm run check                                 # Hyper Elements validation + lint, 0 errors / 0 warnings
 npm test                                      # kitchen math tests
@@ -148,7 +148,7 @@ npm run example                               # render the CLI-made Masala Chai 
 
 ### Add your own recipe
 
-1. Copy `recipes/tomato-rasam.ts` to `recipes/your-dish.ts` and fill it in: ingredients take a `qty`, a `unit`, an `aisle`, and an optional `group` and `note`.
+1. Copy `recipes/chocolate-chip-cookies.ts` to `recipes/your-dish.ts` and fill it in: ingredients take a `qty`, a `unit`, an `aisle`, and an optional `group` and `note`.
 2. Add it to `recipes/index.ts`.
 3. Pick an `accent` and the `dish` colours (bowl, food, garnish); the plate illustration and the whole theme follow.
 4. `npm run build`.

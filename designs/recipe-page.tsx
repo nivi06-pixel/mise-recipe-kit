@@ -5,7 +5,7 @@ import { prepare, type Options, type Recipe } from "../src/kitchen";
 import { Plate, TimeBar } from "../src/parts";
 import { themeFor } from "../src/theme";
 import { webFonts } from "../src/fonts";
-import rasam from "../recipes/tomato-rasam";
+import cookies from "../recipes/chocolate-chip-cookies";
 
 export interface RecipePageProps extends Options {
   recipe: Recipe;
@@ -184,4 +184,4 @@ export default function RecipePage({ recipe, serves, system, links = DEFAULT_LIN
   );
 }
 
-RecipePage.PreviewProps = { recipe: rasam } satisfies RecipePageProps;
+RecipePage.PreviewProps = { recipe: cookies } satisfies RecipePageProps;
