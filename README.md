@@ -31,7 +31,7 @@ Mise treats a recipe as **data plus kitchen math**, and treats Hyper Elements as
 
 <p>
   <img src="media/page-cookies.png" alt="A recipe web page on desktop" width="72%">
-  <img src="media/page-cookies-mobile.png" alt="The same page on a phone" width="22%">
+  <img src="media/page-cookies-mobile.png" alt="The cheesecake page on a phone" width="22%">
 </p>
 
 **Kitchen card (PDF, A5):** three pages, with a page header and footer, page numbers, and a shopping list you can tick off
@@ -87,6 +87,8 @@ npx hyper-elements render examples/cheeseburger.values.json --out examples/out
 ```
 
 The values file records a hash of the template and of the photo it was made with.
+
+<img src="media/template-cli-example.png" alt="Smash Cheeseburgers square share image made from the CLI" width="360">
 
 If a value breaks a rule, `design new` refuses to write the file and names the field. A 600×900 photo, for example, gets:
 
