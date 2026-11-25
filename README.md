@@ -4,6 +4,8 @@
 
 Built with [Hyper Elements](https://www.hyperelements.dev/) for the Hyper Elements Template Challenge.
 
+**Live preview: [nivi06-pixel.github.io/mise-recipe-kit](https://nivi06-pixel.github.io/mise-recipe-kit/)**: every output for every recipe: [web page](https://nivi06-pixel.github.io/mise-recipe-kit/tomato-rasam/) · [email](https://nivi06-pixel.github.io/mise-recipe-kit/tomato-rasam/email.html) · [kitchen card PDF](https://nivi06-pixel.github.io/mise-recipe-kit/tomato-rasam/kitchen-card.pdf) · [pin](https://nivi06-pixel.github.io/mise-recipe-kit/tomato-rasam/pin.png) · [scaled for 8, US units](https://nivi06-pixel.github.io/mise-recipe-kit/tomato-rasam-for-8-us/)
+
 ![The same Tomato Rasam recipe as a web page, a newsletter email, a PDF kitchen card and a Pinterest pin](media/hero.png)
 
 > *Mise en place*: "everything in its place". Cooks set out every ingredient before they light the stove. This kit does the same for a recipe's content: you write it once, and each format gets the version it needs.
@@ -142,7 +144,7 @@ npm test                                      # kitchen math tests
 npm run example                               # render the CLI-made Masala Chai share card
 ```
 
-`docs/` is committed, so the outputs can be browsed on GitHub or served with GitHub Pages (Settings → Pages → `main` / `docs`).
+`docs/` is committed and served by GitHub Pages: that's the [live preview](https://nivi06-pixel.github.io/mise-recipe-kit/).
 
 ### Add your own recipe
 
