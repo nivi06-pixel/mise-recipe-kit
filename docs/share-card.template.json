@@ -1,0 +1,348 @@
+{
+  "version": 1,
+  "id": "mise.ShareCard",
+  "templateVersion": "1.0.0",
+  "label": "Recipe share image",
+  "description": "A recipe's share image for Pinterest, feeds and stories: the dish, drawn, with its name and the numbers that matter.",
+  "root": "Canvas",
+  "guidance": "Lead with the dish's name as people would search for it. Keep the hook to one sentence a friend would say.",
+  "formats": {
+    "pin": {
+      "width": 1000,
+      "height": 1500
+    },
+    "square": {
+      "width": 1080,
+      "height": 1080
+    },
+    "story": {
+      "width": 1080,
+      "height": 1920
+    }
+  },
+  "fields": [
+    {
+      "path": "title",
+      "kind": "text",
+      "label": "Dish name",
+      "required": true,
+      "schema": {
+        "type": "string",
+        "maxLength": 48,
+        "minLength": 1
+      },
+      "guidance": "The name people search for: 'Tomato Rasam', not 'My cosy soup'."
+    },
+    {
+      "path": "kicker",
+      "kind": "text",
+      "label": "Kicker",
+      "description": "Small line above the name: a cuisine, a course.",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "maxLength": 32
+      }
+    },
+    {
+      "path": "hook",
+      "kind": "text",
+      "label": "Hook",
+      "required": true,
+      "schema": {
+        "type": "string",
+        "maxLength": 110,
+        "minLength": 1
+      },
+      "guidance": "One sentence: why cook this tonight."
+    },
+    {
+      "path": "totalTime",
+      "kind": "text",
+      "label": "Total time",
+      "required": true,
+      "schema": {
+        "type": "string",
+        "maxLength": 14,
+        "minLength": 1
+      }
+    },
+    {
+      "path": "serves",
+      "kind": "text",
+      "label": "Serves",
+      "required": true,
+      "schema": {
+        "type": "string",
+        "maxLength": 14,
+        "minLength": 1
+      }
+    },
+    {
+      "path": "tags",
+      "kind": "list",
+      "label": "Tags",
+      "required": false,
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "maxLength": 18
+        },
+        "maxItems": 3
+      }
+    },
+    {
+      "path": "tags[]",
+      "kind": "text",
+      "label": "Tag",
+      "required": false,
+      "schema": {
+        "type": "string",
+        "maxLength": 18
+      }
+    },
+    {
+      "path": "seed",
+      "kind": "text",
+      "label": "Illustration seed",
+      "description": "Places the garnish: the recipe's slug keeps every format's plate the same.",
+      "required": true,
+      "schema": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    {
+      "path": "accent",
+      "kind": "color",
+      "label": "Accent",
+      "required": true,
+      "schema": {
+        "type": "string"
+      }
+    },
+    {
+      "path": "base",
+      "kind": "color",
+      "label": "Bowl colour",
+      "required": true,
+      "schema": {
+        "type": "string"
+      }
+    },
+    {
+      "path": "food",
+      "kind": "color",
+      "label": "Food colour",
+      "required": true,
+      "schema": {
+        "type": "string"
+      }
+    },
+    {
+      "path": "garnish",
+      "kind": "list",
+      "label": "Garnish colours",
+      "required": false,
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "maxItems": 4
+      }
+    },
+    {
+      "path": "garnish[]",
+      "kind": "color",
+      "label": "Garnish colour",
+      "required": false,
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "rules": {
+    "lint": [],
+    "core": []
+  },
+  "theme": {
+    "tokens": [
+      {
+        "path": "colors.background",
+        "group": "colors",
+        "value": "#fbf6ee"
+      },
+      {
+        "path": "colors.foreground",
+        "group": "colors",
+        "value": "#2b2118"
+      },
+      {
+        "path": "colors.primary",
+        "group": "colors",
+        "value": "#b8462a"
+      },
+      {
+        "path": "colors.primaryForeground",
+        "group": "colors",
+        "value": "#ffffff"
+      },
+      {
+        "path": "colors.muted",
+        "group": "colors",
+        "value": "#7a6a5a"
+      },
+      {
+        "path": "colors.border",
+        "group": "colors",
+        "value": "#e6d9c6"
+      },
+      {
+        "path": "colors.paper",
+        "group": "colors",
+        "value": "#fffdf8"
+      },
+      {
+        "path": "colors.soft",
+        "group": "colors",
+        "value": "#f3eadb"
+      },
+      {
+        "path": "colors.ink",
+        "group": "colors",
+        "value": "#2b2118"
+      },
+      {
+        "path": "fonts.body",
+        "group": "fonts",
+        "value": "Inter, Helvetica, Arial, sans-serif"
+      },
+      {
+        "path": "fonts.heading",
+        "group": "fonts",
+        "value": "Fraunces, Georgia, 'Times New Roman', serif"
+      }
+    ],
+    "roles": [
+      "colors.background",
+      "colors.foreground",
+      "fonts.body",
+      "fonts.heading",
+      "colors.primary",
+      "colors.primaryForeground",
+      "colors.border"
+    ],
+    "styles": [
+      "card",
+      "eyebrow",
+      "chip"
+    ],
+    "elements": [
+      {
+        "type": "Heading",
+        "variants": [],
+        "by": "level"
+      },
+      {
+        "type": "Button",
+        "variants": [
+          "ghost"
+        ]
+      },
+      {
+        "type": "Divider",
+        "variants": []
+      }
+    ],
+    "components": [
+      {
+        "type": "Heading",
+        "variants": [],
+        "by": "level"
+      },
+      {
+        "type": "Button",
+        "variants": [
+          "ghost"
+        ]
+      },
+      {
+        "type": "Divider",
+        "variants": []
+      }
+    ]
+  },
+  "valuesSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "title",
+      "hook",
+      "totalTime",
+      "serves",
+      "seed",
+      "accent",
+      "base",
+      "food"
+    ],
+    "properties": {
+      "title": {
+        "type": "string",
+        "maxLength": 48,
+        "minLength": 1
+      },
+      "kicker": {
+        "type": "string",
+        "maxLength": 32
+      },
+      "hook": {
+        "type": "string",
+        "maxLength": 110,
+        "minLength": 1
+      },
+      "totalTime": {
+        "type": "string",
+        "maxLength": 14,
+        "minLength": 1
+      },
+      "serves": {
+        "type": "string",
+        "maxLength": 14,
+        "minLength": 1
+      },
+      "tags": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "maxLength": 18
+        },
+        "maxItems": 3
+      },
+      "seed": {
+        "type": "string",
+        "minLength": 1
+      },
+      "accent": {
+        "type": "string"
+      },
+      "base": {
+        "type": "string"
+      },
+      "food": {
+        "type": "string"
+      },
+      "garnish": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1,
+        "maxItems": 4
+      }
+    }
+  },
+  "fixed": "Everything not listed: the layout, typography, colors, the fixed text and images, and the arrangement per format."
+}

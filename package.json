@@ -1,0 +1,38 @@
+{
+  "name": "mise-recipe-kit",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsx scripts/build.tsx",
+    "dev": "hyper-elements dev designs",
+    "check": "hyper-elements check designs",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/kitchen.test.ts",
+    "example": "hyper-elements render examples/masala-chai.values.json --out examples/out"
+  },
+  "license": "MIT",
+  "description": "Mise: write a recipe once, get a web page, a printable kitchen card PDF, a newsletter email and social images. Built with Hyper Elements.",
+  "dependencies": {
+    "@fontsource/fraunces": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@hyper-elements/react": "^0.5.2",
+    "@react-pdf/renderer": "^4.9.1",
+    "@resvg/resvg-js": "^2.6.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "satori": "^0.33.5"
+  },
+  "devDependencies": {
+    "@hyper-elements/cli": "^0.3.3",
+    "@types/node": "^26.6.10",
+    "@types/react": "^19.3.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  },
+  "type": "module",
+  "private": true,
+  "hyperElements": {
+    "templates": [
+      "src/**"
+    ]
+  }
+}
