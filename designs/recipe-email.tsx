@@ -4,7 +4,7 @@ import {
 import { prepare, type Options, type Recipe } from "../src/kitchen";
 import { themeFor } from "../src/theme";
 import { webFonts } from "../src/fonts";
-import cookies from "../recipes/chocolate-chip-cookies";
+import cookies from "../recipes/cookie-pie";
 
 export interface RecipeEmailProps extends Options {
   recipe: Recipe;

@@ -1,8 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { amount, fraction, line, prepare } from "../src/kitchen";
-import cookies from "../recipes/chocolate-chip-cookies";
-import bread from "../recipes/banana-bread";
+import cookies from "../recipes/cookie-pie";
+import burger from "../recipes/cheeseburger";
 
 test("fractions a cook can read", () => {
   assert.equal(fraction(1.5), "1½");
@@ -14,11 +14,11 @@ test("fractions a cook can read", () => {
 });
 
 test("scaling doubles amounts and keeps times", () => {
-  const p = prepare(cookies, { serves: 48 });
+  const p = prepare(cookies, { serves: 16 });
   assert.equal(p.factor, 2);
   assert.equal(p.groups[0].lines[0].amount, "340 g");
-  assert.equal(p.totalTime, "1 hr 2 min");
-  assert.match(p.scaledNote ?? "", /from 24 to 48 cookies/);
+  assert.equal(p.totalTime, "58 min");
+  assert.match(p.scaledNote ?? "", /from 8 to 16 slices/);
 });
 
 test("metric grams roll over to kilograms", () => {
@@ -38,10 +38,10 @@ test("counted things pluralise and halve sensibly", () => {
 });
 
 test("shopping list leaves staples off and groups by aisle", () => {
-  const p = prepare(bread);
+  const p = prepare(burger);
   const items = p.shopping.flatMap((s) => s.lines.map((l) => l.item));
   assert.ok(!items.includes("fine salt"));
-  assert.deepEqual(p.shopping.map((s) => s.aisle), ["produce", "dairy", "pantry", "spices"]);
+  assert.deepEqual(p.shopping.map((s) => s.aisle), ["produce", "dairy", "bakery", "meat", "pantry", "spices"]);
 });
 
 test("counted items are pluralised after scaling", () => {

@@ -5,7 +5,7 @@ import { prepare, type Options, type Recipe } from "../src/kitchen";
 import { Plate, TimeBar } from "../src/parts";
 import { themeFor } from "../src/theme";
 import { webFonts } from "../src/fonts";
-import cookies from "../recipes/chocolate-chip-cookies";
+import cookies from "../recipes/cookie-pie";
 
 export interface RecipePageProps extends Options {
   recipe: Recipe;

@@ -1,6 +1,6 @@
 // npm run build                         every recipe, every format, into docs/
 // npm run build -- --serves 8 --us      cook for 8, in cups and ounces
-// npm run build -- --recipe chocolate-chip-cookies
+// npm run build -- --recipe cookie-pie
 
 import { mkdir, readdir, writeFile } from "node:fs/promises";
 import { parseArgs } from "node:util";

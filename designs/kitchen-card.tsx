@@ -5,7 +5,7 @@ import { prepare, type Options, type Recipe } from "../src/kitchen";
 import { Plate, Tick, TimeBar } from "../src/parts";
 import { themeFor } from "../src/theme";
 import { printFonts } from "../src/fonts";
-import cookies from "../recipes/chocolate-chip-cookies";
+import cookies from "../recipes/cookie-pie";
 
 export interface KitchenCardProps extends Options {
   recipe: Recipe;
