@@ -125,7 +125,7 @@ Covered by `npm test` (6 tests, Node's built-in test runner).
 Requires **Node.js 20.6+**.
 
 ```bash
-git clone https://github.com/<your-username>/mise-recipe-kit.git
+git clone https://github.com/nivi06-pixel/mise-recipe-kit.git
 cd mise-recipe-kit
 npm install
 npm run build          # every recipe, every format → docs/
