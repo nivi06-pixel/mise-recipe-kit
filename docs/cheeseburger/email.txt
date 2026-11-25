@@ -8,6 +8,8 @@ SMASH CHEESEBURGERS
 
 Thin, crusty patties, melted cheddar and a tangy burger sauce on a toasted bun
 
+[A double smash cheeseburger with melted cheddar and sliced red onion in a glossy bun]
+
 Time
 
 25 min
@@ -59,3 +61,5 @@ Cooking offline? Print the kitchen card and shopping list (PDF) (kitchen-card.pd
 ---
 
 You're getting this because you signed up for one good recipe a week from Mise. Unsubscribe ({{unsubscribe_url}})
+
+Photo: Manu Ros (https://unsplash.com/@manuros) on Unsplash

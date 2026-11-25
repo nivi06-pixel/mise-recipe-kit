@@ -2,7 +2,8 @@ import {
   Button, Column, Divider, Heading, Link, List, ListItem, Menu, Page, Row, Section, Span, Text, token,
 } from "@hyper-elements/react";
 import { prepare, type Options, type Recipe } from "../src/kitchen";
-import { Plate, TimeBar } from "../src/parts";
+import { TimeBar } from "../src/parts";
+import { DishPhoto, photoAsset, type PhotoAsset } from "../src/photo";
 import { themeFor } from "../src/theme";
 import { webFonts } from "../src/fonts";
 import cookies from "../recipes/cookie-pie";
@@ -11,6 +12,8 @@ export interface RecipePageProps extends Options {
   recipe: Recipe;
   /** Where the other outputs are, relative to the page. */
   links?: { card?: string; email?: string; pin?: string };
+  /** The dish's photo; its published URL unless given. */
+  photo?: PhotoAsset;
 }
 
 const WIDTH = 1120;
@@ -18,7 +21,7 @@ const WIDTH = 1120;
 /** The recipe's web page: a headnote, the numbers that matter, ingredients beside the method. */
 const DEFAULT_LINKS = { card: "kitchen-card.pdf", email: "email.html", pin: "pin.png" };
 
-export default function RecipePage({ recipe, serves, system, links = DEFAULT_LINKS }: RecipePageProps) {
+export default function RecipePage({ recipe, serves, system, links = DEFAULT_LINKS, photo }: RecipePageProps) {
   const p = prepare(recipe, { serves, system });
   const meta = [
     { label: "Prep", value: `${recipe.time.prep} min` },
@@ -55,38 +58,36 @@ export default function RecipePage({ recipe, serves, system, links = DEFAULT_LIN
         </Row>
       </Section>
 
-      {/* Hero */}
-      <Section style={{ padding: [64, 32, 48], mobile: { padding: [36, 20, 28] } }}>
-        <Row style={{ gap: 56, alignItems: "center", mobile: { gap: 28 } }}>
-          <Column style={{ gap: 22 }}>
-            <Text style={{ apply: ["eyebrow"] }}>
-              {recipe.cuisine} · {recipe.difficulty}
-            </Text>
-            <Heading level={1}>{recipe.title}</Heading>
-            <Text style={{ fontFamily: token("fonts.heading"), fontStyle: "italic", fontSize: 21, lineHeight: 1.4, color: token("colors.muted"), mobile: { fontSize: 18 } }}>
-              {recipe.subtitle}
-            </Text>
-            <Row stackOnMobile={false} style={{ gap: 8, flexWrap: "wrap" }}>
-              {recipe.tags.map((t) => (
-                <Text key={t} style={{ apply: ["chip"], flex: "none" }}>{t}</Text>
-              ))}
-            </Row>
-            <Row stackOnMobile={false} style={{ gap: 0, padding: [18, 0], border: { top: { width: 1, style: "solid", color: token("colors.border") }, bottom: { width: 1, style: "solid", color: token("colors.border") } }, flexWrap: "wrap" }}>
-              {meta.map((m) => (
-                <Column key={m.label} style={{ gap: 2, padding: [4, 20, 4, 0], minWidth: 110 }}>
-                  <Text style={{ fontSize: 11, fontWeight: 600, letterSpacing: 1.2, textTransform: "uppercase", color: token("colors.muted") }}>{m.label}</Text>
-                  <Text style={{ fontFamily: token("fonts.heading"), fontSize: 20, fontWeight: 600 }}>{m.value}</Text>
-                </Column>
-              ))}
-            </Row>
-            <Row stackOnMobile={false} style={{ gap: 12, flexWrap: "wrap" }}>
-              <Button href={links.card ?? DEFAULT_LINKS.card} style={{ flex: "none" }}>Print the kitchen card</Button>
-              <Button href="#method" variant="ghost" style={{ flex: "none" }}>Jump to method</Button>
-            </Row>
-          </Column>
-          <Column style={{ width: 420, alignItems: "center", flex: "none", mobile: { width: "100%" } }}>
-            <Plate recipe={recipe} size={400} />
-          </Column>
+      {/* Hero: the name and what it is first, then the dish */}
+      <Section style={{ padding: [56, 32, 48], gap: 28, mobile: { padding: [32, 20, 28], gap: 20 } }}>
+        <Column style={{ gap: 16, maxWidth: 820 }}>
+          <Text style={{ apply: ["eyebrow"] }}>
+            {recipe.cuisine} · {recipe.difficulty}
+          </Text>
+          <Heading level={1}>{recipe.title}</Heading>
+          <Text style={{ fontFamily: token("fonts.heading"), fontStyle: "italic", fontSize: 22, lineHeight: 1.4, color: token("colors.muted"), mobile: { fontSize: 18 } }}>
+            {recipe.subtitle}
+          </Text>
+        </Column>
+        <DishPhoto recipe={recipe} src={photo ?? photoAsset(recipe.photo)} height={540} />
+        <Row style={{ gap: 32, alignItems: "center", mobile: { gap: 18 } }}>
+          <Row stackOnMobile={false} style={{ gap: 0, flexWrap: "wrap" }}>
+            {meta.map((m) => (
+              <Column key={m.label} style={{ gap: 2, padding: [4, 24, 4, 0], minWidth: 104 }}>
+                <Text style={{ fontSize: 11, fontWeight: 600, letterSpacing: 1.2, textTransform: "uppercase", color: token("colors.muted") }}>{m.label}</Text>
+                <Text style={{ fontFamily: token("fonts.heading"), fontSize: 20, fontWeight: 600 }}>{m.value}</Text>
+              </Column>
+            ))}
+          </Row>
+          <Row stackOnMobile={false} style={{ gap: 12, flexWrap: "wrap", justifyContent: "end", flex: "none" }}>
+            <Button href={links.card ?? DEFAULT_LINKS.card} style={{ flex: "none" }}>Print the kitchen card</Button>
+            <Button href="#method" variant="ghost" style={{ flex: "none" }}>Jump to method</Button>
+          </Row>
+        </Row>
+        <Row stackOnMobile={false} style={{ gap: 8, flexWrap: "wrap" }}>
+          {recipe.tags.map((t) => (
+            <Text key={t} style={{ apply: ["chip"], flex: "none" }}>{t}</Text>
+          ))}
         </Row>
       </Section>
 

@@ -50,9 +50,21 @@ export interface Recipe {
   notes?: string[];
   /** Brand colour for this recipe: buttons, accents, the illustration. */
   accent: string;
-  /** The dish's colours, top to bottom, for the generated plate illustration. */
-  dish: { base: string; food: string; garnish: string[] };
+  /** A real photo of the dish, kept in photos/. */
+  photo: Photo;
   url: string;
+}
+
+/** A photo of the finished dish: the file, its size in px, and who took it. */
+export interface Photo {
+  /** File name in photos/: "cookie-pie.jpg". */
+  file: string;
+  width: number;
+  height: number;
+  /** What's in the picture, for screen readers. */
+  alt: string;
+  credit: string;
+  creditUrl: string;
 }
 
 export type System = "metric" | "us";

@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "template": {
+    "module": "../src/share-card.tsx",
+    "id": "mise.ShareCard",
+    "version": "2.0.0",
+    "sha256": "fb6de0b6c91fb640c2c925764caa8fc17901e68800c3d10c4bec5b6f7aa96e23"
+  },
+  "formats": [
+    "pin",
+    "square",
+    "story"
+  ],
+  "values": {
+    "title": "Smash Cheeseburgers",
+    "kicker": "Weeknight dinner",
+    "hook": "Two thin, crusty patties and melted cheddar in a soft toasted bun.",
+    "totalTime": "25 min",
+    "serves": "4 burgers",
+    "tags": [
+      "Weeknight"
+    ],
+    "accent": "#b23a1f",
+    "photo": {
+      "src": "../photos/cheeseburger.jpg",
+      "width": 1600,
+      "height": 1067
+    },
+    "credit": "Manu Ros / Unsplash"
+  },
+  "assets": {
+    "photo": {
+      "sha256": "cf210f828a45dd6c6c77ace96db4c831d0cf29f8765f1f42586df14692eab878"
+    }
+  }
+}

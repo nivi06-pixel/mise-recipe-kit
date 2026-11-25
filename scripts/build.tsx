@@ -2,7 +2,7 @@
 // npm run build -- --serves 8 --us      cook for 8, in cups and ounces
 // npm run build -- --recipe cookie-pie
 
-import { mkdir, readdir, writeFile } from "node:fs/promises";
+import { cp, mkdir, readdir, writeFile } from "node:fs/promises";
 import { parseArgs } from "node:util";
 import { ElementsError, formatDiagnostics, render } from "@hyper-elements/react";
 import { renderPdf } from "@hyper-elements/react/pdf";
@@ -15,6 +15,7 @@ import RecipeEmail from "../designs/recipe-email";
 import { ShareCard } from "../src/share-card";
 import { prepare, type Recipe } from "../src/kitchen";
 import { fileFonts } from "../src/fonts";
+import { photoAsset } from "../src/photo";
 import { recipes } from "../recipes";
 
 const { values: args } = parseArgs({
@@ -57,15 +58,17 @@ export function shareValues(recipe: Recipe, s?: number) {
     totalTime: p.totalTime,
     serves: `${p.serves} ${recipe.yieldNoun}`,
     tags: recipe.tags.slice(0, 2),
-    seed: recipe.slug,
     accent: recipe.accent,
-    base: recipe.dish.base,
-    food: recipe.dish.food,
-    garnish: recipe.dish.garnish,
+    // drawn on this machine, so the file's bytes go in rather than a URL
+    photo: photoAsset(recipe.photo, "inline"),
+    credit: `${recipe.photo.credit} / Unsplash`,
   };
 }
 
 const built: Array<{ recipe: Recipe; dir: string }> = [];
+
+// The photos are published beside the pages: the web page and the email load them by URL.
+await cp("photos", `${args.out}/photos`, { recursive: true });
 
 for (const recipe of recipes.filter((r) => !args.recipe || r.slug === args.recipe)) {
   const suffix = serves || args.us ? `-for-${serves ?? recipe.serves}${args.us ? "-us" : ""}` : "";
@@ -76,6 +79,8 @@ for (const recipe of recipes.filter((r) => !args.recipe || r.slug === args.recip
 
   const links = { card: "kitchen-card.pdf", email: "email.html", pin: "pin.png", page: "index.html" };
   const opts = { recipe, serves, system } as const;
+  // the page and the email are opened elsewhere, so they link the published photo; the PDF embeds it
+  const inline = photoAsset(recipe.photo, "inline");
 
   const page = await step("web page          index.html", () => render(<RecipePage {...opts} links={links} />));
   if (page) await writeFile(`${out}/index.html`, page.html);
@@ -86,7 +91,7 @@ for (const recipe of recipes.filter((r) => !args.recipe || r.slug === args.recip
     await writeFile(`${out}/email.txt`, email.text);
   }
 
-  const card = await step("kitchen card      kitchen-card.pdf", () => renderPdf(<KitchenCard {...opts} />, { fonts }));
+  const card = await step("kitchen card      kitchen-card.pdf", () => renderPdf(<KitchenCard {...opts} photo={inline} />, { fonts }));
   if (card) await writeFile(`${out}/kitchen-card.pdf`, card.pdf);
 
   // The share images go through the template: its check first, then each format.
@@ -111,7 +116,7 @@ await writeFile(`${args.out}/share-card.template.json`, JSON.stringify(ShareCard
 
 // A gallery page linking everything in the output folder, this build's and earlier ones'
 // (a scaled build adds to it). It is what GitHub Pages serves.
-const dirs = (await readdir(args.out, { withFileTypes: true })).filter((d) => d.isDirectory()).map((d) => d.name);
+const dirs = (await readdir(args.out, { withFileTypes: true })).filter((d) => d.isDirectory() && d.name !== "photos").map((d) => d.name);
 const listed = dirs
   .map((dir) => ({ dir, recipe: recipes.find((r) => dir === r.slug || dir.startsWith(`${r.slug}-for-`)) }))
   .filter((x): x is { dir: string; recipe: Recipe } => !!x.recipe)

@@ -2,13 +2,16 @@ import {
   Column, Divider, Document, Grid, Heading, PageBreak, PageFooter, PageNumber, Row, Span, Text, token,
 } from "@hyper-elements/react";
 import { prepare, type Options, type Recipe } from "../src/kitchen";
-import { Plate, Tick, TimeBar } from "../src/parts";
+import { Tick, TimeBar } from "../src/parts";
+import { DishPhoto, photoAsset, type PhotoAsset } from "../src/photo";
 import { themeFor } from "../src/theme";
 import { printFonts } from "../src/fonts";
 import cookies from "../recipes/cookie-pie";
 
 export interface KitchenCardProps extends Options {
   recipe: Recipe;
+  /** The dish's photo; its published URL unless given. */
+  photo?: PhotoAsset;
 }
 
 // A5 is about 552 x 794 px at 96 dpi; inside 36 px margins the content is 480 px wide.
@@ -19,7 +22,7 @@ const CONTENT = 480;
  * the recipe at the size you're cooking; the last page is the shopping list,
  * grouped by aisle, with boxes to tick.
  */
-export default function KitchenCard({ recipe, serves, system }: KitchenCardProps) {
+export default function KitchenCard({ recipe, serves, system, photo }: KitchenCardProps) {
   const p = prepare(recipe, { serves, system });
   return (
     <Document
@@ -42,19 +45,15 @@ export default function KitchenCard({ recipe, serves, system }: KitchenCardProps
         </Row>
       </PageFooter>
 
-      {/* Title block */}
-      <Row stackOnMobile={false} style={{ gap: 16, alignItems: "center" }}>
-        <Column style={{ gap: 6 }}>
-          <Text style={{ apply: ["eyebrow"], fontSize: 8, letterSpacing: 1.4 }}>
-            {recipe.cuisine} · {recipe.difficulty}
-          </Text>
-          <Heading level={1} style={{ fontSize: 30, letterSpacing: -0.5, lineHeight: 1.05 }}>{recipe.title}</Heading>
-          <Text style={{ fontFamily: token("fonts.heading"), fontStyle: "italic", fontSize: 11.5, color: token("colors.muted") }}>{recipe.subtitle}</Text>
-        </Column>
-        <Column style={{ width: 104, flex: "none" }}>
-          <Plate recipe={recipe} size={104} />
-        </Column>
-      </Row>
+      {/* Title block: the name and what it is, then the dish */}
+      <Column style={{ gap: 6 }}>
+        <Text style={{ apply: ["eyebrow"], fontSize: 8, letterSpacing: 1.4 }}>
+          {recipe.cuisine} · {recipe.difficulty}
+        </Text>
+        <Heading level={1} style={{ fontSize: 30, letterSpacing: -0.5, lineHeight: 1.05 }}>{recipe.title}</Heading>
+        <Text style={{ fontFamily: token("fonts.heading"), fontStyle: "italic", fontSize: 11.5, color: token("colors.muted") }}>{recipe.subtitle}</Text>
+      </Column>
+      <DishPhoto recipe={recipe} src={photo ?? photoAsset(recipe.photo)} height={150} radius={8} creditSize={6.5} />
 
       {/* The numbers */}
       <Row stackOnMobile={false} style={{ padding: [8, 0], border: { top: { width: 0.75, style: "solid", color: token("colors.border") }, bottom: { width: 0.75, style: "solid", color: token("colors.border") } } }}>

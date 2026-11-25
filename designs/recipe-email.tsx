@@ -1,9 +1,10 @@
 import {
-  Button, Column, Divider, Email, Heading, Link, MergeTag, Row, Section, Span, Text, token,
+  Button, Column, Divider, Email, Heading, Image, Link, MergeTag, Row, Section, Span, Text, token,
 } from "@hyper-elements/react";
 import { prepare, type Options, type Recipe } from "../src/kitchen";
 import { themeFor } from "../src/theme";
 import { webFonts } from "../src/fonts";
+import { photoAsset, type PhotoAsset } from "../src/photo";
 import cookies from "../recipes/cookie-pie";
 
 export interface RecipeEmailProps extends Options {
@@ -11,14 +12,17 @@ export interface RecipeEmailProps extends Options {
   /** "Sunday supper", "This week's recipe" */
   issue?: string;
   links?: { page?: string; card?: string };
+  /** The dish's photo: a public URL, which every mail client can fetch. */
+  photo?: PhotoAsset;
 }
 
 /**
  * "This week's recipe": the newsletter that sends people to the stove.
- * Email has no Svg, so the dish is a colour block and the numbers do the work;
- * a few ingredients tease the list, and the buttons lead to the page and the PDF.
+ * The name and the hook come first on a band in the dish's colour, then the
+ * photo, then the numbers; a few ingredients tease the list, and the buttons
+ * lead to the page and the PDF.
  */
-export default function RecipeEmail({ recipe, serves, system, issue = "This week's recipe", links = {} }: RecipeEmailProps) {
+export default function RecipeEmail({ recipe, serves, system, issue = "This week's recipe", links = {}, photo }: RecipeEmailProps) {
   const p = prepare(recipe, { serves, system });
   const all = p.groups.flatMap((g) => g.lines);
   const teaser = all.slice(0, 6);
@@ -43,7 +47,7 @@ export default function RecipeEmail({ recipe, serves, system, issue = "This week
         </Row>
       </Section>
 
-      {/* The dish: a band in its own colour */}
+      {/* The dish: its name on a band in its own colour, then the photo */}
       <Section style={{ padding: [0, 16] }}>
         <Column style={{ backgroundColor: recipe.accent, borderRadius: [20, 20, 0, 0], padding: [44, 36, 40], gap: 14, mobile: { padding: [32, 22] } }}>
           <Text style={{ fontSize: 12, fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", color: "#FFFDF8" }}>
@@ -54,6 +58,7 @@ export default function RecipeEmail({ recipe, serves, system, issue = "This week
             {recipe.subtitle}
           </Text>
         </Column>
+        <Image src={photo ?? photoAsset(recipe.photo)} alt={recipe.photo.alt} style={{ width: "100%" }} />
         <Row stackOnMobile={false} style={{ backgroundColor: "#2B2118", borderRadius: [0, 0, 20, 20], padding: [18, 36], mobile: { padding: [16, 22] } }}>
           {[
             ["Time", p.totalTime],
@@ -107,6 +112,9 @@ export default function RecipeEmail({ recipe, serves, system, issue = "This week
         <Text style={{ fontSize: 12, lineHeight: 1.6, color: token("colors.muted"), textAlign: "center" }}>
           You're getting this because you signed up for one good recipe a week from Mise.{" "}
           <Link href="{{unsubscribe_url}}" style={{ color: token("colors.muted") }}>Unsubscribe</Link>
+        </Text>
+        <Text style={{ fontSize: 12, color: token("colors.muted"), textAlign: "center" }}>
+          Photo: <Link href={recipe.photo.creditUrl} style={{ color: token("colors.muted") }}>{recipe.photo.credit}</Link> on Unsplash
         </Text>
       </Section>
     </Email>

@@ -1,6 +1,5 @@
-import { Canvas, Column, Heading, Row, Span, Text, prop, token } from "@hyper-elements/react";
-import { template } from "@hyper-elements/react/template";
-import { Plate } from "./parts";
+import { Canvas, Column, Heading, Image, Layer, Row, Span, Text, prop, token } from "@hyper-elements/react";
+import { field, template } from "@hyper-elements/react/template";
 import { themeFor } from "./theme";
 import { printFonts } from "./fonts";
 
@@ -15,16 +14,16 @@ const FORMATS = {
 
 /**
  * The share image, as a Hyper Elements template: its fixed parts (the paper,
- * the wordmark, the plate), its open fields (each typed, with limits), and
- * three formats. `ShareCard.check(values)` refuses a dish name that won't fit
+ * the wordmark), its open fields (each typed, with limits, the dish's photo
+ * among them), and three formats. The words come first, then the photo. `ShareCard.check(values)` refuses a dish name that won't fit
  * before anything is drawn; `ShareCard.describe()` tells an agent or a CMS
  * exactly what it may fill in.
  */
 export const ShareCard = template({
   id: "mise.ShareCard",
-  version: "1.0.0",
+  version: "2.0.0",
   label: "Recipe share image",
-  description: "A recipe's share image for Pinterest, feeds and stories: the dish, drawn, with its name and the numbers that matter.",
+  description: "A recipe's share image for Pinterest, feeds and stories: its name and hook, then a photo of the dish, and the numbers that matter.",
   guidance: "Lead with the dish's name as people would search for it. Keep the hook to one sentence a friend would say.",
   root: "Canvas",
   formats: FORMATS,
@@ -35,11 +34,19 @@ export const ShareCard = template({
     totalTime: prop.text({ label: "Total time", required: true, maxLength: 14 }),
     serves: prop.text({ label: "Serves", required: true, maxLength: 14 }),
     tags: prop.list(prop.text({ label: "Tag", maxLength: 18 }), { label: "Tags", max: 3 }),
-    seed: prop.text({ label: "Illustration seed", required: true, description: "Places the garnish: the recipe's slug keeps every format's plate the same." }),
     accent: prop.color({ label: "Accent", required: true }),
-    base: prop.color({ label: "Bowl colour", required: true }),
-    food: prop.color({ label: "Food colour", required: true }),
-    garnish: prop.list(prop.color({ label: "Garnish colour" }), { label: "Garnish colours", min: 1, max: 4 }),
+    photo: field.image({
+      label: "Dish photo",
+      required: true,
+      description: "The finished dish, landscape. It fills its box in each format, cropped from the centre.",
+      guidance: "A real photo of this dish, plated, in daylight. No text or logos in the picture.",
+      fit: "cover",
+      aspect: { min: 1.2, max: 1.8 },
+      minWidth: 1200,
+      accepts: ["jpeg", "png", "webp"],
+      maxCrop: 0.6,
+    }),
+    credit: prop.text({ label: "Photo credit", required: true, maxLength: 40, description: "Who took the photo: shown small in its corner." }),
   },
   example: {
     title: "Chocolate Chip Cookie Pie",
@@ -48,18 +55,16 @@ export const ShareCard = template({
     totalTime: "58 min",
     serves: "8 slices",
     tags: ["Vegetarian", "Crowd-pleaser"],
-    seed: "cookie-pie",
     accent: "#8A3E17",
-    base: "#2F2A27",
-    food: "#C68A4E",
-    garnish: ["#3B2314", "#5A3520", "#FFF8EE"],
+    photo: { src: "https://nivi06-pixel.github.io/mise-recipe-kit/photos/cookie-pie.jpg", width: 1600, height: 1067 },
+    credit: "Salm Dans / Unsplash",
   },
   render(v, { format }) {
     const { width, height } = FORMATS[format];
-    const dish = { slug: v.seed, accent: v.accent, dish: { base: v.base, food: v.food, garnish: v.garnish } };
     const square = format === "square";
     const pad = square ? 72 : 80;
-    const plate = square ? 440 : format === "story" ? 840 : 580;
+    // the photo's box: beside the words in the square, under them in the tall formats
+    const photoBox = square ? { width: 420, height: 640 } : format === "story" ? { width: width - pad * 2, height: 860 } : { width: width - pad * 2, height: 560 };
 
     const words = (
       <Column style={{ gap: square ? 22 : 28 }}>
@@ -109,6 +114,15 @@ export const ShareCard = template({
       </Text>
     );
 
+    const photo = (
+      <Layer style={{ width: photoBox.width, height: photoBox.height, borderRadius: 28, alignItems: "end", justifyItems: "end", ...(square ? { flex: "none" as const } : {}) }}>
+        <Image field="photo" src={v.photo} alt={`${v.title}, finished`} />
+        <Text style={{ fontSize: 18, color: "#FFFDF8", backgroundColor: "rgba(43, 33, 24, 0.7)", padding: [6, 16], borderRadius: [16, 0, 28, 0] }}>
+          Photo: {v.credit}
+        </Text>
+      </Layer>
+    );
+
     return (
       <Canvas
         theme={themeFor({ accent: v.accent })}
@@ -122,17 +136,13 @@ export const ShareCard = template({
         {mark}
         {square ? (
           <Row style={{ gap: 48, alignItems: "center" }}>
-            <Column style={{ width: plate, flex: "none" }}>
-              <Plate recipe={dish} size={plate} />
-            </Column>
             {words}
+            {photo}
           </Row>
         ) : (
           <>
-            <Column style={{ alignItems: "center" }}>
-              <Plate recipe={dish} size={plate} />
-            </Column>
             {words}
+            {photo}
           </>
         )}
         {footer}

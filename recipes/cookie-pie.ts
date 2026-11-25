@@ -40,7 +40,7 @@ const cookiePie: Recipe = {
     "No skillet? A 23 cm (9 in) round cake tin works; start checking at 22 minutes.",
   ],
   accent: "#8A3E17",
-  dish: { base: "#2F2A27", food: "#C68A4E", garnish: ["#3B2314", "#5A3520", "#FFF8EE"] },
+  photo: { file: "cookie-pie.jpg", width: 1600, height: 1067, alt: "A cast-iron skillet of chocolate chip cookie pie with a scoop of melting vanilla ice cream and a wedge spooned out", credit: "Salm Dans", creditUrl: "https://unsplash.com/@salmdans" },
   url: "https://nivi06-pixel.github.io/mise-recipe-kit/cookie-pie/",
 };
 

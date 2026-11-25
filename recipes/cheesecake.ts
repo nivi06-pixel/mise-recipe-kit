@@ -40,7 +40,7 @@ const cheesecake: Recipe = {
     "Freezes well in slices: wrap each one and thaw overnight in the fridge.",
   ],
   accent: "#A8562E",
-  dish: { base: "#F4EBDD", food: "#F7E7C6", garnish: ["#C98A4B", "#B3213A", "#FFFDF5"] },
+  photo: { file: "cheesecake.jpg", width: 1600, height: 1066, alt: "A slice of New York cheesecake topped with a raspberry and a blueberry on a dark plate", credit: "Tina Guina", creditUrl: "https://unsplash.com/@kittinskie" },
   url: "https://nivi06-pixel.github.io/mise-recipe-kit/cheesecake/",
 };
 

@@ -1,9 +1,9 @@
 {
   "version": 1,
   "id": "mise.ShareCard",
-  "templateVersion": "1.0.0",
+  "templateVersion": "2.0.0",
   "label": "Recipe share image",
-  "description": "A recipe's share image for Pinterest, feeds and stories: the dish, drawn, with its name and the numbers that matter.",
+  "description": "A recipe's share image for Pinterest, feeds and stories: its name and hook, then a photo of the dish, and the numbers that matter.",
   "root": "Canvas",
   "guidance": "Lead with the dish's name as people would search for it. Keep the hook to one sentence a friend would say.",
   "formats": {
@@ -103,17 +103,6 @@
       }
     },
     {
-      "path": "seed",
-      "kind": "text",
-      "label": "Illustration seed",
-      "description": "Places the garnish: the recipe's slug keeps every format's plate the same.",
-      "required": true,
-      "schema": {
-        "type": "string",
-        "minLength": 1
-      }
-    },
-    {
       "path": "accent",
       "kind": "color",
       "label": "Accent",
@@ -123,44 +112,99 @@
       }
     },
     {
-      "path": "base",
-      "kind": "color",
-      "label": "Bowl colour",
+      "path": "photo",
+      "kind": "image",
+      "label": "Dish photo",
+      "description": "The finished dish, landscape. It fills its box in each format, cropped from the centre.",
       "required": true,
       "schema": {
-        "type": "string"
-      }
-    },
-    {
-      "path": "food",
-      "kind": "color",
-      "label": "Food colour",
-      "required": true,
-      "schema": {
-        "type": "string"
-      }
-    },
-    {
-      "path": "garnish",
-      "kind": "list",
-      "label": "Garnish colours",
-      "required": false,
-      "schema": {
-        "type": "array",
-        "items": {
-          "type": "string"
+        "type": "object",
+        "required": [
+          "src",
+          "width",
+          "height"
+        ],
+        "properties": {
+          "src": {
+            "type": "string",
+            "minLength": 1
+          },
+          "width": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "height": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
         },
-        "minItems": 1,
-        "maxItems": 4
+        "additionalProperties": false
+      },
+      "fit": "cover",
+      "aspect": {
+        "min": 1.2,
+        "max": 1.8
+      },
+      "minWidth": 1200,
+      "accepts": [
+        "jpeg",
+        "png",
+        "webp"
+      ],
+      "maxCrop": 0.6,
+      "guidance": "A real photo of this dish, plated, in daylight. No text or logos in the picture.",
+      "regions": {
+        "pin": {
+          "box": [
+            840,
+            560
+          ],
+          "pixels": [
+            840,
+            560
+          ]
+        },
+        "square": {
+          "box": [
+            420,
+            640
+          ],
+          "pixels": [
+            420,
+            640
+          ]
+        },
+        "story": {
+          "box": [
+            920,
+            860
+          ],
+          "pixels": [
+            920,
+            860
+          ]
+        }
+      },
+      "suggested": {
+        "width": 920,
+        "height": 860,
+        "crop": {
+          "pin": "cuts 29% of the height",
+          "square": "cuts 39% of the width",
+          "story": "crops nothing"
+        }
       }
     },
     {
-      "path": "garnish[]",
-      "kind": "color",
-      "label": "Garnish colour",
-      "required": false,
+      "path": "credit",
+      "kind": "text",
+      "label": "Photo credit",
+      "description": "Who took the photo: shown small in its corner.",
+      "required": true,
       "schema": {
-        "type": "string"
+        "type": "string",
+        "maxLength": 40,
+        "minLength": 1
       }
     }
   ],
@@ -283,10 +327,9 @@
       "hook",
       "totalTime",
       "serves",
-      "seed",
       "accent",
-      "base",
-      "food"
+      "photo",
+      "credit"
     ],
     "properties": {
       "title": {
@@ -321,26 +364,36 @@
         },
         "maxItems": 3
       },
-      "seed": {
-        "type": "string",
-        "minLength": 1
-      },
       "accent": {
         "type": "string"
       },
-      "base": {
-        "type": "string"
-      },
-      "food": {
-        "type": "string"
-      },
-      "garnish": {
-        "type": "array",
-        "items": {
-          "type": "string"
+      "photo": {
+        "type": "object",
+        "required": [
+          "src",
+          "width",
+          "height"
+        ],
+        "properties": {
+          "src": {
+            "type": "string",
+            "minLength": 1
+          },
+          "width": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "height": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
         },
-        "minItems": 1,
-        "maxItems": 4
+        "additionalProperties": false
+      },
+      "credit": {
+        "type": "string",
+        "maxLength": 40,
+        "minLength": 1
       }
     }
   },

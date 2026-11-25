@@ -41,7 +41,7 @@ const cheeseburger: Recipe = {
     "The sauce keeps for a week in the fridge.",
   ],
   accent: "#B23A1F",
-  dish: { base: "#F4EBDD", food: "#D9A250", garnish: ["#5B2E1A", "#F2B632", "#5E8C3A", "#FFF4D6"] },
+  photo: { file: "cheeseburger.jpg", width: 1600, height: 1067, alt: "A double smash cheeseburger with melted cheddar and sliced red onion in a glossy bun", credit: "Manu Ros", creditUrl: "https://unsplash.com/@manuros" },
   url: "https://nivi06-pixel.github.io/mise-recipe-kit/cheeseburger/",
 };
 

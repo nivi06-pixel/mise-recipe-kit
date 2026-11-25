@@ -53,7 +53,7 @@ Mise treats a recipe as **data plus kitchen math**, and treats Hyper Elements as
   <img src="media/gallery.png" alt="Gallery index linking every output" width="58%">
 </p>
 
-The plate illustrations aren't photos. They're **generated** with Hyper Elements' `Svg` shapes from each recipe's colours and a seed, so a recipe needs no photography, and the dish looks identical in the browser, the PDF and the PNG.
+Every output reads the same way: the dish's name and a one-line description first, then a **real photo of the dish**. The photo comes in as an asset in two forms. The web page and the email link the published file, which a browser or mail client fetches. The PDF and the PNGs embed the bytes, so the build works offline. In the page, the card and the share images it fills a fixed-height `Layer`, cropped to cover, with the photographer's credit over the corner.
 
 ---
 
@@ -63,7 +63,7 @@ Hyper Elements is the whole presentation layer. There is no other templating, CS
 
 ### Four roots from one codebase
 - `designs/recipe-page.tsx` → `<Page>` with `breakpoints`, `Section` bands, `Row`/`Column` layout, `Menu`, `List`, `Button`, and `style.mobile` / `hidden` for phones.
-- `designs/recipe-email.tsx` → `<Email>` with `previewText`, `MergeTag` (`first_name`), a merge-tag unsubscribe link and a plain-text version (`render().text`). There's no `Svg` in email, so the dish becomes a colour band instead.
+- `designs/recipe-email.tsx` → `<Email>` with `previewText`, `MergeTag` (`first_name`), a merge-tag unsubscribe link and a plain-text version (`render().text`). The dish's name sits on a band in its own colour, with the photo directly beneath it as a full-width `Image`.
 - `designs/kitchen-card.tsx` → `<Document size="A5">` with `PageFooter`, `<PageNumber />` / `<PageNumber total />`, `PageBreak`, `Grid columns={2}`, and `Svg` tick boxes. Rendered with `renderPdf()`.
 - `src/share-card.tsx` → `<Canvas>` rendered with `renderImage()`.
 
@@ -74,6 +74,7 @@ Hyper Elements is the whole presentation layer. There is no other templating, CS
 The share image is a Hyper Elements **template** (`@hyper-elements/react/template`):
 - **Three `formats`** (pin, square, story) from one `render(values, { format })`. The square switches to a side-by-side layout.
 - **Typed fields** (`prop.text` with `maxLength`, `prop.color`, `prop.list` with `min`/`max`), each with a `label`, a `description` and `guidance` for whoever fills it in.
+- **An image field**: `field.image()` for the dish photo, with `fit: "cover"`, an aspect range (1.2:1 to 1.8:1), a 1200 px minimum width, accepted file types and a crop limit. It is bound to the `Image` it fills (`field="photo"`), so `describe()` reports each format's photo box and the pixels it needs.
 - **`fit`** on the `Heading` and the hook `Text`, so a long dish name steps down through sizes instead of overflowing.
 - `ShareCard.check(values)` runs before every render in the build; bad values never reach an image.
 - `ShareCard.describe()` is written to [`docs/share-card.template.json`](docs/share-card.template.json): a JSON Schema plus guidance that a CMS form or an AI agent can fill.
@@ -81,17 +82,18 @@ The share image is a Hyper Elements **template** (`@hyper-elements/react/templat
 That makes the template usable **without writing code**, through the Hyper Elements CLI:
 
 ```bash
-npx hyper-elements design new src/share-card.tsx -o examples/masala-chai.values.json \
-  --set "title=Masala Chai" --set "hook=Ginger, cardamom and black tea, boiled hard the way the chaiwala does it." \
-  --set "totalTime=15 min" --set "serves=2 cups" --set seed=masala-chai \
-  --set "accent=#7A4A1F" --set "base=#F2E6D6" --set "food=#B07A4A" \
-  --set 'garnish=["#5B3417","#E9D3B0","#3E7B3A"]'
-npx hyper-elements render examples/masala-chai.values.json --out examples/out
+npx hyper-elements design new src/share-card.tsx -o examples/cheeseburger.values.json   --set "title=Smash Cheeseburgers" --set "kicker=Weeknight dinner"   --set "hook=Two thin, crusty patties and melted cheddar in a soft toasted bun."   --set "totalTime=25 min" --set "serves=4 burgers" --set 'tags=["Weeknight"]' --set "accent=#B23A1F"   --set 'photo={"src":"../photos/cheeseburger.jpg","width":1600,"height":1067}' --set "credit=Manu Ros / Unsplash"
+npx hyper-elements render examples/cheeseburger.values.json --out examples/out
 ```
 
-<img src="media/template-cli-example.png" alt="Masala Chai square share image made from the CLI" width="360">
+The values file records a hash of the template and of the photo it was made with.
 
-If a value breaks a rule (no garnish colour, a 60-character title), `design new` refuses to write the file and names the field.
+If a value breaks a rule, `design new` refuses to write the file and names the field. A 600×900 photo, for example, gets:
+
+```
+error template/asset-aspect at values.photo: Dish photo is 600×900, 0.67:1; it takes 1.2:1 or wider
+error template/asset-pixels at values.photo: Dish photo is 600px wide; it takes at least 1200px
+```
 
 ### Diagnostics as a design partner
 Hyper Elements' checks caught real problems while this kit was being built, and each one shaped the final design:
@@ -141,7 +143,7 @@ npm run build -- --recipe cookie-pie                    # just one recipe
 npm run dev                                   # Hyper Elements live preview of every design
 npm run check                                 # Hyper Elements validation + lint, 0 errors / 0 warnings
 npm test                                      # kitchen math tests
-npm run example                               # render the CLI-made Masala Chai share card
+npm run example                               # render the CLI-made cheeseburger share card
 ```
 
 `docs/` is committed and served by GitHub Pages: that's the [live preview](https://nivi06-pixel.github.io/mise-recipe-kit/).
@@ -150,7 +152,7 @@ npm run example                               # render the CLI-made Masala Chai 
 
 1. Copy `recipes/cookie-pie.ts` to `recipes/your-dish.ts` and fill it in: ingredients take a `qty`, a `unit`, an `aisle`, and an optional `group` and `note`.
 2. Add it to `recipes/index.ts`.
-3. Pick an `accent` and the `dish` colours (bowl, food, garnish); the plate illustration and the whole theme follow.
+3. Add a landscape photo of the dish (at least 1200 px wide) to `photos/` and fill in `photo`: its file name, size, alt text and credit. Pick an `accent`; the whole theme follows.
 4. `npm run build`.
 
 ---
@@ -166,10 +168,12 @@ designs/            One file per output: each default-exports a design (what `hy
 src/
   share-card.tsx    template(): fields, formats, fit, check, describe
   theme.ts          defineTheme() + extendTheme() per recipe
-  parts.tsx         Plate (generated Svg illustration), TimeBar, Tick
+  photo.tsx         the dish photo: published URL or embedded bytes, and DishPhoto (Layer + credit)
+  parts.tsx         TimeBar, Tick
   kitchen.ts        scaling, fractions, units, shopping list
   fonts.ts          font files for web, email, PDF and image
 recipes/            The content: one typed file per recipe
+photos/             One photo per recipe (copied to docs/photos/ by the build)
 scripts/build.tsx   render(), renderPdf(), renderImage(), template check → docs/
 examples/           A share card made from the CLI as a values file
 docs/               Every rendered output, plus a gallery index
@@ -181,6 +185,7 @@ tests/              Kitchen math tests
 
 - [Hyper Elements](https://github.com/hyper-elements/hyper-elements) by Unlayer: layout and rendering for every output.
 - Fonts: [Fraunces](https://fonts.google.com/specimen/Fraunces) and [Inter](https://rsms.me/inter/) (SIL Open Font License), via [Fontsource](https://fontsource.org/).
-- Recipes written for this project. Illustrations are generated; no third-party imagery is used.
+- Recipes written for this project.
+- Photos from [Unsplash](https://unsplash.com/license), used under the Unsplash License: cookie pie by [Salm Dans](https://unsplash.com/@salmdans), cheeseburger by [Manu Ros](https://unsplash.com/@manuros), cheesecake by [Tina Guina](https://unsplash.com/@kittinskie).
 
 MIT licensed. See [LICENSE](LICENSE).
